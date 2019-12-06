@@ -1,4 +1,5 @@
 ﻿using System;
+using WingsOn.Core.Enums;
 
 namespace WingsOn.Domain
 {

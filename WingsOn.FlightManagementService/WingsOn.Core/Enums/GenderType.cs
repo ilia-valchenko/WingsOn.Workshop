@@ -1,4 +1,4 @@
-﻿namespace WingsOn.Domain
+﻿namespace WingsOn.Core.Enums
 {
     public enum GenderType
     {
