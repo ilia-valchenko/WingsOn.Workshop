@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WingsOn.Core\WingsOn.Core.csproj" />
     <ProjectReference Include="..\WingsOn.Domain\WingsOn.Domain.csproj" />
   </ItemGroup>
 
