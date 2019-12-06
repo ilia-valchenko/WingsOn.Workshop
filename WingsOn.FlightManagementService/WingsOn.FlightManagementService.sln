@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WingsOn.Domain", "WingsOn.Domain\WingsOn.Domain.csproj", "{5F545996-4008-44BC-A48F-D71233483A08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WingsOn.Domain", "WingsOn.Domain\WingsOn.Domain.csproj", "{5F545996-4008-44BC-A48F-D71233483A08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WingsOn.Dal", "WingsOn.Dal\WingsOn.Dal.csproj", "{4BFAD5C1-D3F4-41EF-889E-7C328F87C9BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WingsOn.Dal", "WingsOn.Dal\WingsOn.Dal.csproj", "{4BFAD5C1-D3F4-41EF-889E-7C328F87C9BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WingsOn.Api", "WingsOn.Api\WingsOn.Api.csproj", "{9B692CD3-7C20-462A-959B-2BE07AC70059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WingsOn.Api", "WingsOn.Api\WingsOn.Api.csproj", "{9B692CD3-7C20-462A-959B-2BE07AC70059}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WingsOn.Services", "WingsOn.Services\WingsOn.Services.csproj", "{BD63B91F-EDF1-4E1E-9CC7-CBA860556826}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{9B692CD3-7C20-462A-959B-2BE07AC70059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B692CD3-7C20-462A-959B-2BE07AC70059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B692CD3-7C20-462A-959B-2BE07AC70059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD63B91F-EDF1-4E1E-9CC7-CBA860556826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD63B91F-EDF1-4E1E-9CC7-CBA860556826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD63B91F-EDF1-4E1E-9CC7-CBA860556826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD63B91F-EDF1-4E1E-9CC7-CBA860556826}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
