@@ -24,7 +24,7 @@ namespace WingsOn.Services.Configuration
 
             collection.AddTransient<IPersonService, PersonService>();
             collection.AddTransient<IPersonValidationService, PersonValidationService>();
-            collection.AddTransient<IResourceIdGenerator, ResourceIdGenerator>();
+            collection.AddSingleton<IResourceIdGenerator, ResourceIdGenerator>();
         }
     }
 }
