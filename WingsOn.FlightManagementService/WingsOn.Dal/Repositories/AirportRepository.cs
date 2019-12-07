@@ -2,8 +2,14 @@
 
 namespace WingsOn.Dal.Repositories
 {
+    /// <summary>
+    /// The airport repository.
+    /// </summary>
     public sealed class AirportRepository : RepositoryBase<Airport>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AirlineRepository"/> class.
+        /// </summary>
         public AirportRepository()
         {
             Repository.AddRange(new[]

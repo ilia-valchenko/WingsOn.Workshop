@@ -6,12 +6,20 @@ using WingsOn.Domain;
 
 namespace WingsOn.Dal.Repositories
 {
+    /// <summary>
+    /// The flight repository.
+    /// </summary>
     public sealed class FlightRepository : RepositoryBase<Flight>
     {
         private readonly IRepository<Airport> _airportRepository;
         private readonly IRepository<Airline> _airlineRepository;
         private readonly CultureInfo _cultureInfo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FlightRepository"/> class.
+        /// </summary>
+        /// <param name="airportRepository">The airport repository.</param>
+        /// <param name="airlineRepository">The airline repository.</param>
         public FlightRepository(
             IRepository<Airport> airportRepository,
             IRepository<Airline> airlineRepository)

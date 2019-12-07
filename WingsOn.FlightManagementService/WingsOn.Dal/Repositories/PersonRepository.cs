@@ -5,10 +5,16 @@ using WingsOn.Domain;
 
 namespace WingsOn.Dal.Repositories
 {
+    /// <summary>
+    /// The person repository.
+    /// </summary>
     public sealed class PersonRepository : RepositoryBase<Person>
     {
         private readonly CultureInfo _cultureInfo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PersonRepository"/> class.
+        /// </summary>
         public PersonRepository()
         {
             // TODO: Put culture info in a config file.

@@ -32,6 +32,7 @@ namespace WingsOn.Dal.Repositories
             }
 
             T existing = Get(element.Id);
+
             if (existing != null)
             {
                 Repository.Remove(existing);
