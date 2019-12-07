@@ -17,6 +17,7 @@ namespace WingsOn.Api.Configuration
         public static IServiceCollection RegisterDependencies(this IServiceCollection collection)
         {
             Services.Configuration.DIConfiguration.RegisterDependencies(collection);
+            MapperConfiguration.RegisterMapper(collection);
 
             return collection;
         }

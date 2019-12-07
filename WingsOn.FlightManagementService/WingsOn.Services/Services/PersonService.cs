@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using WingsOn.Core.Exceptions;
 using WingsOn.Dal.Interfaces;
 using WingsOn.Domain;
@@ -21,30 +22,32 @@ namespace WingsOn.Services.Services
         private readonly IRepository<Person> _personRepository;
         private readonly IResourceIdGenerator _resourceIdGenerator;
         private readonly IPersonValidationService _personValidationService;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PersonService"/> class.
         /// </summary>
-        /// <param name="personRepository"></param>
-        /// <param name="resourceIdGenerator"></param>
-        /// <param name="personValidationService"></param>
+        /// <param name="personRepository">The person repository.</param>
+        /// <param name="resourceIdGenerator">The resource id generator.</param>
+        /// <param name="personValidationService">The person validation service.</param>
+        /// <param name="mapper">The mapper.</param>
         public PersonService(
             IRepository<Person> personRepository,
             IResourceIdGenerator resourceIdGenerator,
-            IPersonValidationService personValidationService)
+            IPersonValidationService personValidationService,
+            IMapper mapper)
         {
             _personRepository = personRepository;
             _resourceIdGenerator = resourceIdGenerator;
             _personValidationService = personValidationService;
+            _mapper = mapper;
         }
 
         /// <inheritdoc />
         public IEnumerable<PersonModel> GetAllPersons()
         {
             var persons = _personRepository.GetAll();
-
-            // TODO: Use AutoMapper.
-            return persons.Select(MapToPersonModel);
+            return _mapper.Map<IEnumerable<PersonModel>>(persons);
         }
 
         /// <inheritdoc />
@@ -67,8 +70,7 @@ namespace WingsOn.Services.Services
                 person.Id = GenerateNextPersonId();
             }
 
-            // TODO: Use AutoMapper.
-            _personRepository.Save(MapToPerson(person));
+            _personRepository.Save(_mapper.Map<Person>(person));
 
             return person;
         }
@@ -77,9 +79,7 @@ namespace WingsOn.Services.Services
         public PersonModel GetPerson(int id)
         {
             var person = _personRepository.Get(id);
-
-            // TODO: Use AutoMapper.
-            return MapToPersonModel(person);
+            return _mapper.Map<PersonModel>(person);
         }
 
         /// <inheritdoc />
@@ -91,7 +91,7 @@ namespace WingsOn.Services.Services
             }
 
             _personValidationService.ValidatePerson(person);
-            _personRepository.Save(MapToPerson(person));
+            _personRepository.Save(_mapper.Map<Person>(person));
         }
 
         /// <inheritdoc />
@@ -135,32 +135,6 @@ namespace WingsOn.Services.Services
                 var persons = _personRepository.GetAll();
                 return _resourceIdGenerator.GenerateResourceId(persons);
             }
-        }
-
-        private Person MapToPerson(PersonModel personModel)
-        {
-            return new Person
-            {
-                Id = personModel.Id,
-                Name = personModel.Name,
-                Gender = personModel.Gender,
-                Email = personModel.Email,
-                Address = personModel.Address,
-                DateBirth = personModel.DateBirth
-            };
-        }
-
-        private PersonModel MapToPersonModel(Person person)
-        {
-            return new PersonModel
-            {
-                Id = person.Id,
-                Name = person.Name,
-                Gender = person.Gender,
-                Email = person.Email,
-                Address = person.Address,
-                DateBirth = person.DateBirth
-            };
         }
     }
 }
