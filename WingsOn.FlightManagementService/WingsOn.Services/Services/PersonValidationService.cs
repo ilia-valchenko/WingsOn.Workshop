@@ -5,8 +5,12 @@ using WingsOn.Services.Models;
 
 namespace WingsOn.Services.Services
 {
+    /// <summary>
+    /// The person validation service.
+    /// </summary>
     public sealed class PersonValidationService : IPersonValidationService
     {
+        /// <inheritdoc />
         public void ValidatePerson(PersonModel person)
         {
             if (person == null)

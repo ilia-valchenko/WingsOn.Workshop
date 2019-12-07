@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WingsOn.Domain;
 using WingsOn.Services.Infrastructure.Interfaces;
-using WingsOn.Services.Models;
 
 namespace WingsOn.Services.Infrastructure
 {
+    /// <summary>
+    /// The resource identifier generator.
+    /// </summary>
     public sealed class ResourceIdGenerator : IResourceIdGenerator
     {
         // TODO: Put this value in a configuration file.
@@ -13,7 +16,8 @@ namespace WingsOn.Services.Infrastructure
         // TODO (optional): Create custom config section.
         private const int IdIncrementingValue = 1;
 
-        public int GenerateResourceId(IEnumerable<BaseModel> resources)
+        /// <inheritdoc />
+        public int GenerateResourceId(IEnumerable<DomainObject> resources)
         {
             if (resources == null)
             {
