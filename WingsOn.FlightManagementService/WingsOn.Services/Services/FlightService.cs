@@ -68,32 +68,28 @@ namespace WingsOn.Services.Services
         }
 
         /// <inheritdoc />
-        public IEnumerable<PersonModel> GetPassengers(string flightNumber, GenderType? gender)
+        public IEnumerable<PersonModel> GetPassengers(int id, GenderType gender)
         {
-            if (string.IsNullOrWhiteSpace(flightNumber))
+            if (id <= 0)
             {
-                throw new ArgumentException("The number of the flight is not valid.");
+                throw new ArgumentException("The flight's identifier is less than zero or equals to zero.");
             }
 
-            var flight = _flightRepository.Find(f => string.Equals(f.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
+            var flight = _flightRepository.Get(id);
 
             if (flight == null)
             {
-                throw new ResourceNotFoundException("The flight with provided flight number does not exist.");
+                throw new ResourceNotFoundException("The flight with provided id does not exist.");
             }
 
-            var booking = _bookingRepository.Find(b =>
-                string.Equals(b.Flight?.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
+            var booking = _bookingRepository.Find(b => b.Flight?.Id == id);
 
             if (booking?.Passengers == null)
             {
                 return Enumerable.Empty<PersonModel>();
             }
 
-            var passengers = gender.HasValue
-                ? booking.Passengers.Where(p => p.Gender == gender.Value)
-                : booking.Passengers;
-
+            var passengers = booking.Passengers.Where(p => p.Gender == gender);
             return _mapper.Map<IEnumerable<PersonModel>>(passengers);
         }
     }

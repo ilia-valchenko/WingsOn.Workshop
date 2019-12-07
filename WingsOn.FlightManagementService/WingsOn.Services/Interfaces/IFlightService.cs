@@ -38,11 +38,11 @@ namespace WingsOn.Services.Interfaces
         /// <summary>
         /// Gets a list of passengers for a particular flight.
         /// </summary>
-        /// <param name="flightNumber">The number of a flight.</param>
+        /// <param name="id">The flight's identifier..</param>
         /// <param name="gender">The gender.</param>
         /// <returns>
         /// Returns a collection of instances of the <see cref="PersonModel"/> class.
         /// </returns>
-        IEnumerable<PersonModel> GetPassengers(string flightNumber, GenderType? gender);
+        IEnumerable<PersonModel> GetPassengers(int id, GenderType gender);
     }
 }
