@@ -57,6 +57,8 @@ namespace WingsOn.Api.Configuration
             configuration.CreateMap<PersonViewModel, PersonModel>()
                 .ReverseMap();
 
+            configuration.CreateMap<UpdatePersonViewModel, PersonModel>();
+
             return configuration;
         }
     }

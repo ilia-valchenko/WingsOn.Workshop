@@ -88,9 +88,11 @@ namespace WingsOn.Api.Controllers
         /// <param name="person">The person.</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] PersonViewModel person)
+        public IActionResult Put(int id, [FromBody] UpdatePersonViewModel person)
         {
-            _personService.UpdatePerson(_mapper.Map<PersonModel>(person));
+            var updatedPerson = _mapper.Map<PersonModel>(person);
+            updatedPerson.Id = id;
+            _personService.UpdatePerson(updatedPerson);
             return NoContent();
         }
 
