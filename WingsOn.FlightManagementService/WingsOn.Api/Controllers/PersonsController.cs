@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using WingsOn.Api.ViewModels;
 using WingsOn.Services.Interfaces;
 using WingsOn.Services.Models;
 
@@ -12,14 +15,19 @@ namespace WingsOn.Api.Controllers
     public class PersonsController : ControllerBase
     {
         private readonly IPersonService _personService;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PersonsController"/> class.
         /// </summary>
         /// <param name="personService"></param>
-        public PersonsController(IPersonService personService)
+        /// <param name="mapper">The mapper.</param>
+        public PersonsController(
+            IPersonService personService,
+            IMapper mapper)
         {
             _personService = personService;
+            _mapper = mapper;
         }
 
         // GET: api/v1/persons
@@ -33,7 +41,7 @@ namespace WingsOn.Api.Controllers
         public IActionResult Get()
         {
             var persons = _personService.GetAllPersons();
-            return Ok(persons);
+            return Ok(_mapper.Map<IEnumerable<PersonViewModel>>(persons));
         }
 
         // GET: api/v1/persons/5
@@ -54,7 +62,7 @@ namespace WingsOn.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(person);
+            return Ok(_mapper.Map<PersonViewModel>(person));
         }
 
         // POST: api/v1/persons
@@ -66,10 +74,10 @@ namespace WingsOn.Api.Controllers
         /// Returns the person that has been created.
         /// </returns>
         [HttpPost]
-        public IActionResult Post([FromBody] PersonModel person)
+        public IActionResult Post([FromBody] PersonViewModel person)
         {
-            var result = _personService.CreatePerson(person);
-            return Ok(result);
+            var result = _personService.CreatePerson(_mapper.Map<PersonModel>(person));
+            return Ok(_mapper.Map<PersonViewModel>(result));
         }
 
         // PUT: api/v1/persons/5
@@ -80,10 +88,10 @@ namespace WingsOn.Api.Controllers
         /// <param name="person">The person.</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] PersonModel person)
+        public IActionResult Put(int id, [FromBody] PersonViewModel person)
         {
-            _personService.UpdatePerson(person);
-            return Ok();
+            _personService.UpdatePerson(_mapper.Map<PersonModel>(person));
+            return NoContent();
         }
 
         // DELETE: api/v1/persons/5
@@ -96,7 +104,7 @@ namespace WingsOn.Api.Controllers
         public IActionResult Delete(int id)
         {
             _personService.RemovePerson(id);
-            return Ok();
+            return NoContent();
         }
     }
 }
