@@ -1,4 +1,6 @@
-﻿namespace WingsOn.Api.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WingsOn.Api.ViewModels
 {
     /// <summary>
     /// The base view model.
@@ -16,6 +18,7 @@
         /// <summary>
         /// The identifier.
         /// </summary>
+        [Range(0, int.MaxValue, ErrorMessage = "Id cannot be negative.")]
         public int Id { get; set; }
     }
 }

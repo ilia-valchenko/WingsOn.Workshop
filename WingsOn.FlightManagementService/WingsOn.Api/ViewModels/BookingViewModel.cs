@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WingsOn.Api.ViewModels
 {
@@ -11,6 +12,7 @@ namespace WingsOn.Api.ViewModels
         /// <summary>
         /// The number of a booking.
         /// </summary>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Booking number is required.")]
         public string Number { get; set; }
 
         /// <summary>

@@ -18,10 +18,9 @@ namespace WingsOn.Services.Services
     {
         private static readonly object _lockObject = new object();
 
-        // TODO: Use cacheable provider instead of repository.
+        // TODO: Implement cacheable providers that will wrap repositories.
         private readonly IRepository<Person> _personRepository;
         private readonly IResourceIdGenerator _resourceIdGenerator;
-        private readonly IPersonValidationService _personValidationService;
         private readonly IMapper _mapper;
 
         /// <summary>
@@ -29,17 +28,14 @@ namespace WingsOn.Services.Services
         /// </summary>
         /// <param name="personRepository">The person repository.</param>
         /// <param name="resourceIdGenerator">The resource id generator.</param>
-        /// <param name="personValidationService">The person validation service.</param>
         /// <param name="mapper">The mapper.</param>
         public PersonService(
             IRepository<Person> personRepository,
             IResourceIdGenerator resourceIdGenerator,
-            IPersonValidationService personValidationService,
             IMapper mapper)
         {
             _personRepository = personRepository;
             _resourceIdGenerator = resourceIdGenerator;
-            _personValidationService = personValidationService;
             _mapper = mapper;
         }
 
@@ -57,8 +53,6 @@ namespace WingsOn.Services.Services
             {
                 throw new ArgumentNullException(nameof(person));
             }
-
-            _personValidationService.ValidatePerson(person);
 
             if (DoesPersonExist(person.Id))
             {
@@ -90,7 +84,6 @@ namespace WingsOn.Services.Services
                 throw new ArgumentNullException(nameof(person));
             }
 
-            _personValidationService.ValidatePerson(person);
             _personRepository.Save(_mapper.Map<Person>(person));
         }
 

@@ -23,7 +23,6 @@ namespace WingsOn.Services.Configuration
             Dal.Configuration.DIConfiguration.RegisterDependencies(collection);
 
             collection.AddTransient<IPersonService, PersonService>();
-            collection.AddTransient<IPersonValidationService, PersonValidationService>();
             collection.AddSingleton<IResourceIdGenerator, ResourceIdGenerator>();
         }
     }

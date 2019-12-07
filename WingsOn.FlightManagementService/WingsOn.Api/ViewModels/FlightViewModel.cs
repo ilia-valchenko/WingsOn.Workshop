@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WingsOn.Api.ViewModels
 {
@@ -10,6 +11,7 @@ namespace WingsOn.Api.ViewModels
         /// <summary>
         /// The number of a flight.
         /// </summary>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Flight number is required.")]
         public string Number { get; set; }
 
         /// <summary>
