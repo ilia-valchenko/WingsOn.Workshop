@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>F:\git\workshop2\WingsOn.Workshop\WingsOn.FlightManagementService\WingsOn.Api\WingsOn.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
@@ -15,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WingsOn.Core\WingsOn.Core.csproj" />
+    <ProjectReference Include="..\WingsOn.Services\WingsOn.Services.csproj" />
   </ItemGroup>
 
 </Project>
