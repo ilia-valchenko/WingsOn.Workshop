@@ -14,7 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "api/v1/persons",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
     "WingsOn.Api": {
@@ -23,7 +23,7 @@
       "launchUrl": "api/v1/persons",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
   }
