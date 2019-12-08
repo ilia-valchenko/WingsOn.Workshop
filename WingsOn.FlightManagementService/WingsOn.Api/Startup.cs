@@ -38,6 +38,7 @@ namespace WingsOn.Api
         {
             services
                 .RegisterDependencies()
+                .AddSwaggerDocument()
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -58,7 +59,9 @@ namespace WingsOn.Api
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>()
-                .UseMvc();
+                .UseMvc()
+                .UseOpenApi()
+                .UseSwaggerUi3();
         }
     }
 }
