@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using WingsOn.Core.Exceptions;
 using WingsOn.Dal.Interfaces;
@@ -53,7 +54,7 @@ namespace WingsOn.Services.Services
         }
 
         /// <inheritdoc />
-        public BookingModel CreateBooking(string flightNumber, PersonModel passenger)
+        public async Task<BookingModel> CreateBookingAsync(string flightNumber, PersonModel passenger)
         {
             if (string.IsNullOrWhiteSpace(flightNumber))
             {
@@ -65,19 +66,19 @@ namespace WingsOn.Services.Services
                 throw new ArgumentNullException(nameof(passenger));
             }
 
-            var flight = _flightRepository
-                .Find(f => string.Equals(f.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
+            var flight = await _flightRepository
+                .FindAsync(f => string.Equals(f.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
 
             if (flight == null)
             {
                 throw new ResourceNotFoundException("The flight with provided flight number does not exist.");
             }
 
-            var person = _personRepository.Get(passenger.Id);
+            var person = await _personRepository.GetAsync(passenger.Id);
 
             if (person == null)
             {
-                passenger = _personService.CreatePerson(passenger);
+                passenger = await _personService.CreatePersonAsync(passenger);
             }
 
             var booking = new BookingModel
@@ -90,7 +91,7 @@ namespace WingsOn.Services.Services
                 DateBooking = DateTime.UtcNow
             };
 
-            _bookingRepository.Save(_mapper.Map<Booking>(booking));
+            await _bookingRepository.SaveAsync(_mapper.Map<Booking>(booking));
             return booking;
         }
 

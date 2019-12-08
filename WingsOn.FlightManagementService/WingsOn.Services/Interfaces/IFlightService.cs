@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WingsOn.Core.Enums;
 using WingsOn.Services.Models;
 
@@ -10,30 +11,30 @@ namespace WingsOn.Services.Interfaces
     public interface IFlightService
     {
         /// <summary>
-        /// Returns all flights.
+        /// Returns all flights asynchronous.
         /// </summary>
         /// <returns>
         /// Returns a collection of instances of the <see cref="FlightModel"/> class.
         /// </returns>
-        IEnumerable<FlightModel> GetAllFlights();
+        Task<IEnumerable<FlightModel>> GetAllFlightsAsync();
 
         /// <summary>
-        /// Gets a flight by a flight number.
+        /// Gets a flight by a flight number asynchronous.
         /// </summary>
         /// <param name="flightNumber">The number of a flight.</param>
         /// <returns>
         /// Returns an instance of the <see cref="FlightModel"/> class.
         /// </returns>
-        FlightModel GetFlight(string flightNumber);
+        Task<FlightModel> GetFlightAsync(string flightNumber);
 
         /// <summary>
-        /// Gets a list of passengers for a particular flight.
+        /// Gets a list of passengers for a particular flight asynchronous.
         /// </summary>
         /// <param name="flightNumber">The number of the flight.</param>
         /// <param name="gender">The gender.</param>
         /// <returns>
         /// Returns a collection of instances of the <see cref="PersonModel"/> class.
         /// </returns>
-        IEnumerable<PersonModel> GetPassengers(string flightNumber, GenderType gender);
+        Task<IEnumerable<PersonModel>> GetPassengersAsync(string flightNumber, GenderType gender);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WingsOn.Core.Exceptions;
 using WingsOn.Dal.Interfaces;
 using WingsOn.Domain;
@@ -33,42 +34,49 @@ namespace WingsOn.Dal.Repositories
         }
 
         /// <inheritdoc />
-        public T Get(int id)
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return GetAll().SingleOrDefault(a => a.Id == id);
+            return await Task.Run(() => Repository);
         }
 
         /// <inheritdoc />
-        public T Find(Predicate<T> predicate)
+        public async Task<T> GetAsync(int id)
         {
-            if (predicate == null)
-            {
-                throw new ArgumentNullException(nameof(predicate));
-            }
-
-            return Repository.Find(predicate);
+            var resources = await GetAllAsync();
+            return resources.SingleOrDefault(a => a.Id == id);
         }
 
         /// <inheritdoc />
-        public IEnumerable<T> FindAll(Predicate<T> predicate)
+        public async Task<T> FindAsync(Predicate<T> predicate)
         {
             if (predicate == null)
             {
                 throw new ArgumentNullException(nameof(predicate));
             }
 
-            return Repository.FindAll(predicate);
+            return await Task.Run(() => Repository.Find(predicate));
         }
 
         /// <inheritdoc />
-        public void Save(T element)
+        public async Task<IEnumerable<T>> FindAllAsync(Predicate<T> predicate)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+
+            return await Task.Run(() => Repository.FindAll(predicate));
+        }
+
+        /// <inheritdoc />
+        public async Task SaveAsync(T element)
         {
             if (element == null)
             {
                 return;
             }
 
-            T existing = Get(element.Id);
+            T existing = await GetAsync(element.Id);
 
             if (existing != null)
             {
@@ -79,9 +87,9 @@ namespace WingsOn.Dal.Repositories
         }
 
         /// <inheritdoc />
-        public void Remove(int id)
+        public async Task RemoveAsync(int id)
         {
-            T item = Get(id);
+            T item = await GetAsync(id);
 
             if (item == null)
             {

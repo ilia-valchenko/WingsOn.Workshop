@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using WingsOn.Core.Exceptions;
 using WingsOn.Dal.Interfaces;
@@ -28,7 +29,7 @@ namespace WingsOn.Services.Services
         /// </summary>
         /// <param name="personRepository">The person repository.</param>
         /// <param name="resourceIdGenerator">The resource id generator.</param>
-        /// <param name="mapper">The mapper.</param>
+        ///// <param name="mapper">The mapper.</param>
         public PersonService(
             IRepository<Person> personRepository,
             IResourceIdGenerator resourceIdGenerator,
@@ -40,14 +41,14 @@ namespace WingsOn.Services.Services
         }
 
         /// <inheritdoc />
-        public IEnumerable<PersonModel> GetAllPersons()
+        public async Task<IEnumerable<PersonModel>> GetAllPersonsAsync()
         {
-            var persons = _personRepository.GetAll();
+            var persons = await _personRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<PersonModel>>(persons);
         }
 
         /// <inheritdoc />
-        public PersonModel CreatePerson(PersonModel person)
+        public async Task<PersonModel> CreatePersonAsync(PersonModel person)
         {
             if (person == null)
             {
@@ -64,38 +65,38 @@ namespace WingsOn.Services.Services
                 person.Id = GenerateNextPersonId();
             }
 
-            _personRepository.Save(_mapper.Map<Person>(person));
+            await _personRepository.SaveAsync(_mapper.Map<Person>(person));
 
             return person;
         }
 
         /// <inheritdoc />
-        public PersonModel GetPerson(int id)
+        public async Task<PersonModel> GetPersonAsync(int id)
         {
-            var person = _personRepository.Get(id);
+            var person = await _personRepository.GetAsync(id);
             return _mapper.Map<PersonModel>(person);
         }
 
         /// <inheritdoc />
-        public void UpdatePerson(PersonModel person)
+        public async Task UpdatePersonAsync(PersonModel person)
         {
             if (person == null)
             {
                 throw new ArgumentNullException(nameof(person));
             }
 
-            _personRepository.Save(_mapper.Map<Person>(person));
+            await _personRepository.SaveAsync(_mapper.Map<Person>(person));
         }
 
         /// <inheritdoc />
-        public void RemovePerson(int id)
+        public async Task RemovePersonAsync(int id)
         {
             if (id <= 0)
             {
                 throw new ArgumentException("The provided identifier is less then zero or equals to zero.");
             }
 
-            _personRepository.Remove(id);
+            await _personRepository.RemoveAsync(id);
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace WingsOn.Services.Services
         {
             lock (_lockObject)
             {
-                var persons = _personRepository.GetAll();
+                var persons = _personRepository.GetAllAsync().Result;
 
                 return persons == null || !persons.Any()
                     ? false

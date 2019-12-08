@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WingsOn.Services.Models;
 
 namespace WingsOn.Services.Interfaces
@@ -9,41 +10,41 @@ namespace WingsOn.Services.Interfaces
     public interface IPersonService
     {
         /// <summary>
-        /// Gets all persons.
+        /// Gets all persons asynchronous.
         /// </summary>
         /// <returns>
         /// Returns a collection of <see cref="PersonModel"/> class.
         /// </returns>
-        IEnumerable<PersonModel> GetAllPersons();
+        Task<IEnumerable<PersonModel>> GetAllPersonsAsync();
 
         /// <summary>
-        /// Creates a new person.
+        /// Creates a new person asynchronous.
         /// </summary>
         /// <param name="person">The person model.</param>
         /// <returns>
         /// Returns an instance of the <see cref="PersonModel"/> class.
         /// </returns>
-        PersonModel CreatePerson(PersonModel person);
+        Task<PersonModel> CreatePersonAsync(PersonModel person);
 
         /// <summary>
-        /// Gets person by id.
+        /// Gets person by id asynchronous.
         /// </summary>
         /// <param name="id">The person's identifier.</param>
         /// <returns>
         /// Returns an instance of the <see cref="PersonModel"/> class.
         /// </returns>
-        PersonModel GetPerson(int id);
+        Task<PersonModel> GetPersonAsync(int id);
 
         /// <summary>
-        /// Updates a person.
+        /// Updates a person asynchronous.
         /// </summary>
         /// <param name="person">The updated person model.</param>
-        void UpdatePerson(PersonModel person);
+        Task UpdatePersonAsync(PersonModel person);
 
         /// <summary>
-        /// Removes a person by provided id.
+        /// Removes a person by provided id asynchronous.
         /// </summary>
         /// <param name="id">The person's identifier.</param>
-        void RemovePerson(int id);
+        Task RemovePersonAsync(int id);
     }
 }

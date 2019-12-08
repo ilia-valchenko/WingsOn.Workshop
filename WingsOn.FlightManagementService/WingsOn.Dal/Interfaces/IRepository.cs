@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WingsOn.Domain;
 
 namespace WingsOn.Dal.Interfaces
@@ -19,42 +20,50 @@ namespace WingsOn.Dal.Interfaces
         IEnumerable<T> GetAll();
 
         /// <summary>
-        /// Gets resource by id.
+        /// Gets all resources asynchronous.
+        /// </summary>
+        /// <returns>
+        /// Returns a collection of all available resources.
+        /// </returns>
+        Task<IEnumerable<T>> GetAllAsync();
+
+        /// <summary>
+        /// Gets resource by id asynchronous.
         /// </summary>
         /// <param name="id">The resource id.</param>
         /// <returns>
         /// Returns a resource with provided id.
         /// </returns>
-        T Get(int id);
+        Task<T> GetAsync(int id);
 
         /// <summary>
-        /// Finds resource by predicate.
+        /// Finds resource by predicate asynchronous.
         /// </summary>
         /// <param name="predicate">The predicate.</param>
         /// <returns>
         /// Returns a single resource that satisfies predicate's condition.
         /// </returns>
-        T Find(Predicate<T> predicate);
+        Task<T> FindAsync(Predicate<T> predicate);
 
         /// <summary>
-        /// Finds all resources that satisfy predicate's condition.
+        /// Finds all resources that satisfy predicate's condition asynchronous.
         /// </summary>
         /// <param name="predicate">The predicate.</param>
         /// <returns>
         /// Returns a collection of resources that satisfies predicates's condition.
         /// </returns>
-        IEnumerable<T> FindAll(Predicate<T> predicate);
+        Task<IEnumerable<T>> FindAllAsync(Predicate<T> predicate);
 
         /// <summary>
-        /// Saves a resource.
+        /// Saves a resource asynchronous.
         /// </summary>
         /// <param name="element">The resource.</param>
-        void Save(T element);
+        Task SaveAsync(T element);
 
         /// <summary>
-        /// Removes a resources by using provided id.
+        /// Removes a resources by using provided id asynchronous.
         /// </summary>
         /// <param name="id">The identifier of a resource that should be removed.</param>
-        void Remove(int id);
+        Task RemoveAsync(int id);
     }
 }

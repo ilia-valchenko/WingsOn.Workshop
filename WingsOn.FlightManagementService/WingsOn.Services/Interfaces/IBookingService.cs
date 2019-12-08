@@ -1,4 +1,5 @@
-﻿using WingsOn.Services.Models;
+﻿using System.Threading.Tasks;
+using WingsOn.Services.Models;
 
 namespace WingsOn.Services.Interfaces
 {
@@ -8,13 +9,13 @@ namespace WingsOn.Services.Interfaces
     public interface IBookingService
     {
         /// <summary>
-        /// Creates a new booking of an existing flight for a new passenger.
+        /// Creates a new booking of an existing flight for a new passenger asynchronous.
         /// </summary>
         /// <param name="flightNumber">The number of the flight.</param>
         /// <param name="passenger">The passenger.</param>
         /// <returns>
         /// Returns an instance of the <see cref="BookingModel"/> class.
         /// </returns>
-        BookingModel CreateBooking(string flightNumber, PersonModel passenger);
+        Task<BookingModel> CreateBookingAsync(string flightNumber, PersonModel passenger);
     }
 }

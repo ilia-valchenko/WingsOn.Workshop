@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using WingsOn.Core.Enums;
 using WingsOn.Core.Exceptions;
@@ -37,40 +38,40 @@ namespace WingsOn.Services.Services
         }
 
         /// <inheritdoc />
-        public IEnumerable<FlightModel> GetAllFlights()
+        public async Task<IEnumerable<FlightModel>> GetAllFlightsAsync()
         {
-            var flights = _flightRepository.GetAll();
+            var flights = await _flightRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<FlightModel>>(flights);
         }
 
         /// <inheritdoc />
-        public FlightModel GetFlight(string flightNumber)
+        public async Task<FlightModel> GetFlightAsync(string flightNumber)
         {
             if (string.IsNullOrWhiteSpace(flightNumber))
             {
                 throw new ArgumentException("The number of the flight is not valid.");
             }
 
-            var flight = _flightRepository.Find(f => string.Equals(f.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
+            var flight = await _flightRepository.FindAsync(f => string.Equals(f.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
             return _mapper.Map<FlightModel>(flight);
         }
 
         /// <inheritdoc />
-        public IEnumerable<PersonModel> GetPassengers(string flightNumber, GenderType gender)
+        public async Task<IEnumerable<PersonModel>> GetPassengersAsync(string flightNumber, GenderType gender)
         {
             if (string.IsNullOrWhiteSpace(flightNumber))
             {
                 throw new ArgumentException("The number of the flight is not valid.");
             }
 
-            var flight = _flightRepository.Find(f => string.Equals(f.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
+            var flight = await _flightRepository.FindAsync(f => string.Equals(f.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
 
             if (flight == null)
             {
                 throw new ResourceNotFoundException("The flight with provided flight number does not exist.");
             }
 
-            var bookings = _bookingRepository.FindAll(b =>
+            var bookings = await _bookingRepository.FindAllAsync(b =>
                 string.Equals(b.Flight?.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
 
             if (bookings == null)

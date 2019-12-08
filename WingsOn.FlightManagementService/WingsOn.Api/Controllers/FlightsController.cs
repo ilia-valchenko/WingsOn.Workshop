@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WingsOn.Api.ViewModels;
@@ -37,35 +38,35 @@ namespace WingsOn.Api.Controllers
 
         // GET: api/v1/flights
         /// <summary>
-        /// Gets all flights.
+        /// Gets all flights asynchronous.
         /// </summary>
         /// <returns>
         /// Returns a collection of instances of the <see cref="FlightViewModel"/> class.
         /// </returns>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            var flights = _flightService.GetAllFlights();
+            var flights = await _flightService.GetAllFlightsAsync();
             return Ok(_mapper.Map<IEnumerable<FlightViewModel>>(flights));
         }
 
         // GET: api/v1/flights/PZ696
         /// <summary>
-        /// Gets a flight by the flight number.
+        /// Gets a flight by the flight number asynchronous.
         /// </summary>
         /// <param name="number">The flight's identifier.</param>
         /// <returns>
         /// Returns the instance of the <see cref="FlightViewModel"/> class.
         /// </returns>
         [HttpGet("{number}")]
-        public IActionResult Get(string number)
+        public async Task<IActionResult> GetAsync(string number)
         {
             if (string.IsNullOrWhiteSpace(number))
             {
                 return BadRequest("The number of a flight is null or is empty string.");
             }
 
-            var flight = _flightService.GetFlight(number);
+            var flight = await _flightService.GetFlightAsync(number);
 
             if (flight == null)
             {
@@ -78,7 +79,7 @@ namespace WingsOn.Api.Controllers
         // GET: api/v1/flights/PZ696/passengers/male
         // GET: api/v1/flights/PZ696/passengers/female
         /// <summary>
-        /// Gets a list of passenger for a particular flight and for particular gender.
+        /// Gets a list of passenger for a particular flight and for particular gender asynchronous.
         /// </summary>
         /// <param name="number">The number of the flight.</param>
         /// <param name="gender">The gender.</param>
@@ -86,20 +87,20 @@ namespace WingsOn.Api.Controllers
         /// Returns a list of instances of the <see cref="PersonViewModel"/> class.
         /// </returns>
         [HttpGet("{number}/passengers/{gender}")]
-        public IActionResult GetPassengers(string number, GenderType gender)
+        public async Task<IActionResult> GetPassengersAsync(string number, GenderType gender)
         {
             if (string.IsNullOrWhiteSpace(number))
             {
                 return BadRequest("The number of a flight is null or is empty string.");
             }
 
-            var passengers = _flightService.GetPassengers(number, gender);
+            var passengers = await _flightService.GetPassengersAsync(number, gender);
             return Ok(_mapper.Map<IEnumerable<PersonViewModel>>(passengers));
         }
 
         // POST: api/v1/flights/PZ696/passengers
         /// <summary>
-        /// Creates a new booking of an existing flight for a new passenger.
+        /// Creates a new booking of an existing flight for a new passenger asynchronous.
         /// </summary>
         /// <param name="number">The number of the flight.</param>
         /// <param name="person">The passenger.</param>
@@ -107,7 +108,7 @@ namespace WingsOn.Api.Controllers
         /// Returns an instance of the <see cref="BookingViewModel"/> class.
         /// </returns>
         [HttpPost("{number}/passengers")]
-        public IActionResult CreateBooking(string number, [FromBody] PersonViewModel person)
+        public async Task<IActionResult> CreateBookingAsync(string number, [FromBody] PersonViewModel person)
         {
             if (string.IsNullOrWhiteSpace(number))
             {
@@ -119,7 +120,7 @@ namespace WingsOn.Api.Controllers
                 return BadRequest("The person is missed.");
             }
 
-            var booking = _bookingService.CreateBooking(number, _mapper.Map<PersonModel>(person));
+            var booking = await _bookingService.CreateBookingAsync(number, _mapper.Map<PersonModel>(person));
             return Ok(_mapper.Map<BookingViewModel>(booking));
         }
     }
