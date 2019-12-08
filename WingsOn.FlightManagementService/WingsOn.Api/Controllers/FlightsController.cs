@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using WingsOn.Api.ViewModels;
 using WingsOn.Core.Enums;
 using WingsOn.Services.Interfaces;
+using WingsOn.Services.Models;
 
 namespace WingsOn.Api.Controllers
 {
@@ -15,18 +16,22 @@ namespace WingsOn.Api.Controllers
     public class FlightsController : ControllerBase
     {
         private readonly IFlightService _flightService;
+        private readonly IBookingService _bookingService;
         private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlightsController"/> class.
         /// </summary>
         /// <param name="flightService">The flight service.</param>
+        /// <param name="bookingService">The booking service.</param>
         /// <param name="mapper">The mapper.</param>
         public FlightsController(
             IFlightService flightService,
+            IBookingService bookingService,
             IMapper mapper)
         {
             _flightService = flightService;
+            _bookingService = bookingService;
             _mapper = mapper;
         }
 
@@ -90,6 +95,32 @@ namespace WingsOn.Api.Controllers
 
             var passengers = _flightService.GetPassengers(number, gender);
             return Ok(_mapper.Map<IEnumerable<PersonViewModel>>(passengers));
+        }
+
+        // POST: api/v1/flights/PZ696/passengers
+        /// <summary>
+        /// Creates a new booking of an existing flight for a new passenger.
+        /// </summary>
+        /// <param name="number">The number of the flight.</param>
+        /// <param name="person">The passenger.</param>
+        /// <returns>
+        /// Returns an instance of the <see cref="BookingViewModel"/> class.
+        /// </returns>
+        [HttpPost("{number}/passengers")]
+        public IActionResult CreateBooking(string number, [FromBody] PersonViewModel person)
+        {
+            if (string.IsNullOrWhiteSpace(number))
+            {
+                return BadRequest("The flight number is invalid.");
+            }
+
+            if (person == null)
+            {
+                return BadRequest("The person is missed.");
+            }
+
+            var booking = _bookingService.CreateBooking(number, _mapper.Map<PersonModel>(person));
+            return Ok(_mapper.Map<BookingViewModel>(booking));
         }
     }
 }

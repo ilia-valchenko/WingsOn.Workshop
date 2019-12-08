@@ -24,7 +24,9 @@ namespace WingsOn.Services.Configuration
 
             collection.AddTransient<IPersonService, PersonService>();
             collection.AddTransient<IFlightService, FlightService>();
+            collection.AddTransient<IBookingService, BookingService>();
             collection.AddSingleton<IResourceIdGenerator, ResourceIdGenerator>();
+            collection.AddSingleton<IBookingNumberGenerator, BookingNumberGenerator>();
         }
     }
 }
