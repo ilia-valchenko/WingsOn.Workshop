@@ -70,16 +70,26 @@ namespace WingsOn.Services.Services
                 throw new ResourceNotFoundException("The flight with provided flight number does not exist.");
             }
 
-            var booking = _bookingRepository.Find(b =>
+            var bookings = _bookingRepository.FindAll(b =>
                 string.Equals(b.Flight?.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
 
-            if (booking?.Passengers == null)
+            if (bookings == null)
             {
                 return Enumerable.Empty<PersonModel>();
             }
 
-            var passengers = booking.Passengers.Where(p => p.Gender == gender);
-            return _mapper.Map<IEnumerable<PersonModel>>(passengers);
+            var passengers = new List<Person>();
+
+            foreach (var booking in bookings)
+            {
+                if (booking.Passengers != null && booking.Passengers.Any())
+                {
+                    passengers.AddRange(booking.Passengers);
+                }
+            }
+
+            var filteredPassengers = passengers.Where(p => p.Gender == gender);
+            return _mapper.Map<IEnumerable<PersonModel>>(filteredPassengers);
         }
     }
 }

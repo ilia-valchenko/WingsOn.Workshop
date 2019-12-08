@@ -11,7 +11,7 @@ namespace WingsOn.Services.Services
         // TODO: Put this value to a config file.
         // TODO: Implement configuration provider.
         // TODO (optional): Create custom config section.
-        private const string BookingNumberPrefix = "WB";
+        private const string BookingNumberPrefix = "WO";
         private const string BookingNumberTemplate = "{0}_{1}";
 
         /// <inheritdoc />
