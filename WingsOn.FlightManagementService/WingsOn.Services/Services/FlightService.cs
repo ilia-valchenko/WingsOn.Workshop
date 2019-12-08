@@ -44,18 +44,6 @@ namespace WingsOn.Services.Services
         }
 
         /// <inheritdoc />
-        public FlightModel GetFlight(int id)
-        {
-            if (id <= 0)
-            {
-                throw new ArgumentException("The flight's identifier is less or equal to zero.'");
-            }
-
-            var flight = _flightRepository.Get(id);
-            return _mapper.Map<FlightModel>(flight);
-        }
-
-        /// <inheritdoc />
         public FlightModel GetFlight(string flightNumber)
         {
             if (string.IsNullOrWhiteSpace(flightNumber))
@@ -68,21 +56,22 @@ namespace WingsOn.Services.Services
         }
 
         /// <inheritdoc />
-        public IEnumerable<PersonModel> GetPassengers(int id, GenderType gender)
+        public IEnumerable<PersonModel> GetPassengers(string flightNumber, GenderType gender)
         {
-            if (id <= 0)
+            if (string.IsNullOrWhiteSpace(flightNumber))
             {
-                throw new ArgumentException("The flight's identifier is less than zero or equals to zero.");
+                throw new ArgumentException("The number of the flight is not valid.");
             }
 
-            var flight = _flightRepository.Get(id);
+            var flight = _flightRepository.Find(f => string.Equals(f.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
 
             if (flight == null)
             {
-                throw new ResourceNotFoundException("The flight with provided id does not exist.");
+                throw new ResourceNotFoundException("The flight with provided flight number does not exist.");
             }
 
-            var booking = _bookingRepository.Find(b => b.Flight?.Id == id);
+            var booking = _bookingRepository.Find(b =>
+                string.Equals(b.Flight?.Number, flightNumber, StringComparison.OrdinalIgnoreCase));
 
             if (booking?.Passengers == null)
             {

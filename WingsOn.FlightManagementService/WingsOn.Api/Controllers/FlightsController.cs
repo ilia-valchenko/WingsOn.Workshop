@@ -44,40 +44,15 @@ namespace WingsOn.Api.Controllers
             return Ok(_mapper.Map<IEnumerable<FlightViewModel>>(flights));
         }
 
-        // GET: api/v1/flights/5
+        // GET: api/v1/flights/PZ696
         /// <summary>
-        /// Gets a flight by id.
+        /// Gets a flight by the flight number.
         /// </summary>
-        /// <param name="id">The flight's identifier.</param>
+        /// <param name="number">The flight's identifier.</param>
         /// <returns>
         /// Returns the instance of the <see cref="FlightViewModel"/> class.
         /// </returns>
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            var flight = _flightService.GetFlight(id);
-
-            if (flight == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<FlightViewModel>(flight));
-        }
-
-        // GET: api/v1/flights?number=PZ696
-        /// <summary>
-        /// Gets a flight by a flight number.
-        /// </summary>
-        /// <param name="number">The number of a flight.</param>
-        /// <returns>
-        /// Returns a collection of instances of the <see cref="FlightViewModel"/> class.
-        /// </returns>
-        /// <remarks>
-        /// The collection will contain only one item as we cannot have flights with
-        /// duplicated flight numbers.
-        /// </remarks>
-        [HttpGet]
+        [HttpGet("{number}")]
         public IActionResult Get(string number)
         {
             if (string.IsNullOrWhiteSpace(number))
@@ -92,31 +67,28 @@ namespace WingsOn.Api.Controllers
                 return NotFound();
             }
 
-            // TODO: We will return a collection instead of a single resource due to
-            // URL format. Query parameters look like a filter. We should not confuse the user of this API.
-            // Actually the collection will contain a single item.
-            return Ok(new [] { _mapper.Map<FlightViewModel>(flight) });
+            return Ok(_mapper.Map<FlightViewModel>(flight));
         }
 
-        // GET: api/v1/flights/12/passengers/male
-        // GET: api/v1/flights/12/passengers/female
+        // GET: api/v1/flights/PZ696/passengers/male
+        // GET: api/v1/flights/PZ696/passengers/female
         /// <summary>
         /// Gets a list of passenger for a particular flight and for particular gender.
         /// </summary>
-        /// <param name="id">The flight's identifier.</param>
+        /// <param name="number">The number of the flight.</param>
         /// <param name="gender">The gender.</param>
         /// <returns>
         /// Returns a list of instances of the <see cref="PersonViewModel"/> class.
         /// </returns>
-        [HttpGet("{id}/passengers/{gender}")]
-        public IActionResult GetPassengers(int id, GenderType gender)
+        [HttpGet("{number}/passengers/{gender}")]
+        public IActionResult GetPassengers(string number, GenderType gender)
         {
-            if (id <= 0)
+            if (string.IsNullOrWhiteSpace(number))
             {
-                return BadRequest("The flight identifier is less than zero or equals to zero.");
+                return BadRequest("The number of a flight is null or is empty string.");
             }
 
-            var passengers = _flightService.GetPassengers(id, gender);
+            var passengers = _flightService.GetPassengers(number, gender);
             return Ok(_mapper.Map<IEnumerable<PersonViewModel>>(passengers));
         }
     }

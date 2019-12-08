@@ -18,15 +18,6 @@ namespace WingsOn.Services.Interfaces
         IEnumerable<FlightModel> GetAllFlights();
 
         /// <summary>
-        /// Gets a flight by id.
-        /// </summary>
-        /// <param name="id">The flight's identifier.</param>
-        /// <returns>
-        /// Returns an instance of the <see cref="FlightModel"/> class.
-        /// </returns>
-        FlightModel GetFlight(int id);
-
-        /// <summary>
         /// Gets a flight by a flight number.
         /// </summary>
         /// <param name="flightNumber">The number of a flight.</param>
@@ -38,11 +29,11 @@ namespace WingsOn.Services.Interfaces
         /// <summary>
         /// Gets a list of passengers for a particular flight.
         /// </summary>
-        /// <param name="id">The flight's identifier..</param>
+        /// <param name="flightNumber">The number of the flight.</param>
         /// <param name="gender">The gender.</param>
         /// <returns>
         /// Returns a collection of instances of the <see cref="PersonModel"/> class.
         /// </returns>
-        IEnumerable<PersonModel> GetPassengers(int id, GenderType gender);
+        IEnumerable<PersonModel> GetPassengers(string flightNumber, GenderType gender);
     }
 }
