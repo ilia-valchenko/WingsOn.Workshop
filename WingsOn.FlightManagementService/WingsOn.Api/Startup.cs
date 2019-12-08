@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WingsOn.Api.Configuration;
+using WingsOn.Api.Middlewares;
 
 namespace WingsOn.Api
 {
@@ -56,7 +57,8 @@ namespace WingsOn.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseMiddleware<ErrorHandlingMiddleware>()
+                .UseMvc();
         }
     }
 }
