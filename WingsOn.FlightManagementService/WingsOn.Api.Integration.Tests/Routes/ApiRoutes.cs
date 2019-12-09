@@ -12,7 +12,9 @@
 
             public const string PostAsync = Base + "/persons";
 
-            public const string PutAsync = Base + "/persons";
+            public const string PutAsync = Base + "/persons/{personId}";
+
+            public const string DeleteAsync = Base + "/persons/{personId}";
         }
     }
 }
