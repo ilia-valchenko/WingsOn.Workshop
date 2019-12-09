@@ -3,45 +3,20 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AutoMapper;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Moq;
 using NUnit.Framework;
 using WingsOn.Api.Controllers;
 using WingsOn.Api.Integration.Tests.Routes;
 using WingsOn.Api.ViewModels;
 using WingsOn.Core.Enums;
-using WingsOn.Services.Interfaces;
 
 namespace WingsOn.Api.Integration.Tests
 {
     /// <summary>
     /// The test class that contains integration tests for the <see cref="PersonsController"/> class.
     /// </summary>
-    public class PersonsControllerIntegrationTests
+    public class PersonsControllerIntegrationTests : BaseIntegrationTests
     {
-        private readonly HttpClient _client;
-
-        private Mock<IPersonService> _personServiceMock;
-        private Mock<IMapper> _mapperMock;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PersonsControllerIntegrationTests"/> class.
-        /// </summary>
-        public PersonsControllerIntegrationTests()
-        {
-            var appFactory = new WebApplicationFactory<Startup>();
-            _client = appFactory.CreateClient();
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-            _personServiceMock = new Mock<IPersonService>();
-            _mapperMock = new Mock<IMapper>();
-        }
-
         [Test]
         public async Task GetAsync_ReturnsAllPersons()
         {
@@ -111,10 +86,12 @@ namespace WingsOn.Api.Integration.Tests
             person.Name = "Updated name";
 
             // Act
-            var response = _client.PutAsJsonAsync(ApiRoutes.Persons.PutAsync, person);
+            var response = await _client.PutAsJsonAsync(
+                ApiRoutes.Persons.PutAsync.Replace("{personId}", person.Id.ToString()),
+                person);
 
             // Assert
-            response.Status.Should().Be(HttpStatusCode.NoContent);
+            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
         [Test]

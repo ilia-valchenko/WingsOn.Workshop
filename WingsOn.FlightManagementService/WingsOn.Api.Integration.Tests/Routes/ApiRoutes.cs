@@ -16,5 +16,16 @@
 
             public const string DeleteAsync = Base + "/persons/{personId}";
         }
+
+        public static class Flights
+        {
+            public const string GetAllAsync = Base + "/flights";
+
+            public const string GetAsync = Base + "/flights/{flightNumber}";
+
+            public const string GetPassengersAsync = Base + "/flights/{flightNumber}/passengers/{genderType}";
+
+            public const string CreateBookingAsync = Base + "/flights/{flightNumber}/passengers";
+        }
     }
 }
