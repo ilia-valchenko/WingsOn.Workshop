@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WingsOn.Services", "WingsOn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WingsOn.Core", "WingsOn.Core\WingsOn.Core.csproj", "{D9039A33-CEC9-49DB-8CC9-80C23B153495}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WingsOn.Services.Tests.Unit", "WingsOn.Services.Tests.Unit\WingsOn.Services.Tests.Unit.csproj", "{FC21E1B2-A6A3-4B5D-A59F-7D9B099EA741}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WingsOn.Services.Tests.Unit", "WingsOn.Services.Tests.Unit\WingsOn.Services.Tests.Unit.csproj", "{FC21E1B2-A6A3-4B5D-A59F-7D9B099EA741}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WingsOn.Api.Integration.Tests", "WingsOn.Api.Integration.Tests\WingsOn.Api.Integration.Tests.csproj", "{4A5F462B-D02B-46A7-A396-AEB971895C48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{FC21E1B2-A6A3-4B5D-A59F-7D9B099EA741}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC21E1B2-A6A3-4B5D-A59F-7D9B099EA741}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC21E1B2-A6A3-4B5D-A59F-7D9B099EA741}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A5F462B-D02B-46A7-A396-AEB971895C48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A5F462B-D02B-46A7-A396-AEB971895C48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A5F462B-D02B-46A7-A396-AEB971895C48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A5F462B-D02B-46A7-A396-AEB971895C48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
