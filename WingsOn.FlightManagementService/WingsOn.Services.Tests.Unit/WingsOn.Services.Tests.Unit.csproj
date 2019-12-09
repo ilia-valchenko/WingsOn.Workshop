@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.9.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="nunit" Version="3.10.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WingsOn.Core\WingsOn.Core.csproj" />
+    <ProjectReference Include="..\WingsOn.Dal\WingsOn.Dal.csproj" />
+    <ProjectReference Include="..\WingsOn.Domain\WingsOn.Domain.csproj" />
+    <ProjectReference Include="..\WingsOn.Services\WingsOn.Services.csproj" />
+  </ItemGroup>
+
+</Project>

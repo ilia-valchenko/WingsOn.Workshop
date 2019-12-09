@@ -29,7 +29,7 @@ namespace WingsOn.Services.Services
         /// </summary>
         /// <param name="personRepository">The person repository.</param>
         /// <param name="resourceIdGenerator">The resource id generator.</param>
-        ///// <param name="mapper">The mapper.</param>
+        /// <param name="mapper">The mapper.</param>
         public PersonService(
             IRepository<Person> personRepository,
             IResourceIdGenerator resourceIdGenerator,
@@ -108,7 +108,7 @@ namespace WingsOn.Services.Services
         {
             lock (_lockObject)
             {
-                var persons = _personRepository.GetAllAsync().Result;
+                var persons = _personRepository.GetAll();
 
                 return persons == null || !persons.Any()
                     ? false
