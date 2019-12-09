@@ -123,6 +123,123 @@ namespace WingsOn.Services.Tests.Unit
             _personRepositoryMock.VerifyAll();
         }
 
+        [Test]
+        public async Task CreatePersonAsync_VerifyThatCreatedPersonIsValid()
+        {
+            // Arrange
+            var person = new Person
+            {
+                Id = 0,
+                Email = "fake@test.com",
+                Address = "Fake address",
+                Gender = GenderType.Male,
+                Name = "Fake name"
+            };
+
+            var personModel = MapToPersonModel(person);
+            var expectedResult = MapToPersonModel(person);
+            expectedResult.Id = _persons.Select(p => p.Id).Max() + 1;
+
+            _personRepositoryMock.Setup(m => m.GetAll())
+                .Returns(_persons);
+
+            _personRepositoryMock.Setup(r => r.SaveAsync(It.Is<Person>(p => p.Name == person.Name)))
+                .Returns(Task.FromResult(person))
+                .Verifiable();
+
+            _resourceIdGeneratorMock.Setup(g => g.GenerateResourceId(It.IsAny<IEnumerable<Person>>()))
+                .Returns(expectedResult.Id);
+
+            SetupMapToPersonMethod(personModel);
+
+            // Act
+            var result = await _personService.CreatePersonAsync(personModel);
+
+            // Assert
+            result.Should().BeEquivalentTo(expectedResult);
+        }
+
+        [Test]
+        public async Task GetPersonAsync_CheckIfPersonIsValid()
+        {
+            // Arrange
+            var person = _persons.First();
+
+            _personRepositoryMock.Setup(r => r.GetAsync(person.Id))
+                .ReturnsAsync(person);
+
+            SetupMapToPersonModelMethod(person);
+
+            // Act
+            var result = await _personService.GetPersonAsync(person.Id);
+
+            // Assert
+            result.Should().BeEquivalentTo(person);
+        }
+
+        [Test]
+        public void UpdatePersonAsync_CheckIfArgumentNullExceptionIsThrown()
+        {
+            // Arrange
+            PersonModel person = null;
+
+            // Act + Assert
+            _personService.Invoking(y => y.UpdatePersonAsync(person))
+                .Should().Throw<ArgumentNullException>();
+        }
+
+        [Test]
+        public async Task UpdatePersonAsync_VerifyThatPersonWasSuccessfullyUpdated()
+        {
+            // Arrange
+            var person = new Person
+            {
+                Id = 1,
+                Name = "Fake name"
+            };
+
+            var personModel = MapToPersonModel(person);
+
+            _personRepositoryMock.Setup(r => r.SaveAsync(It.IsAny<Person>()))
+                .Returns(Task.FromResult(person))
+                .Verifiable();
+
+            SetupMapToPersonMethod(personModel);
+
+            // Act
+            await _personService.UpdatePersonAsync(personModel);
+
+            // Assert
+            _personRepositoryMock.VerifyAll();
+        }
+
+        [Test]
+        public void RemovePersonAsync_CheckIfArgumentExceptionIsThrown()
+        {
+            // Arrange
+            int id = -1;
+
+            // Act + Assert
+            _personService.Invoking(y => y.RemovePersonAsync(id))
+                .Should().Throw<ArgumentException>();
+        }
+
+        [Test]
+        public async Task RemovePersonAsync_VerifyThatPersonIsRemoved()
+        {
+            // Arrange
+            int id = 1;
+
+            _personRepositoryMock.Setup(r => r.RemoveAsync(id))
+                .Verifiable();
+
+            // Act
+            await _personService.RemovePersonAsync(id);
+
+            // Assert
+            _personRepositoryMock.VerifyAll();
+        }
+
         // TODO: Implement factory or builder for creating persons.
         private IEnumerable<Person> CreatePersons()
         {
