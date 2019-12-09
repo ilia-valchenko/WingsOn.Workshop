@@ -1,11 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>F:\git\workshop2\WingsOn.Workshop\WingsOn.FlightManagementService\WingsOn.Dal\WingsOn.Dal.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
