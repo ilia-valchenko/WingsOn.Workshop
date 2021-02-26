@@ -36,6 +36,11 @@ namespace WingsOn.Api
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            // ASP .NET Core has built-in dependency injection functionality.
+            // It has built-in IoC container.
+            // If you want more features such as auto-registration, scanning, interceptors, or decorators
+            // then you may replace built-in IoC container with a third party container.
+
             services
                 .RegisterDependencies()
                 .AddSwaggerDocument()
