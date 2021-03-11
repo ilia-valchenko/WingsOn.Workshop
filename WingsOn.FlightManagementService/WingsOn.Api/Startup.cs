@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using WingsOn.Api.Configuration;
 using WingsOn.Api.Middlewares;
 
@@ -53,10 +54,11 @@ namespace WingsOn.Api
         /// </summary>
         /// <param name="app">The application builder.</param>
         /// <param name="env">The environment.</param>
+        /// <param name="loggerFactory">The logger factory.</param>
         /// <remarks>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </remarks>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
