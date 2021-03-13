@@ -45,6 +45,8 @@ namespace WingsOn.Api
             services
                 .RegisterDependencies()
                 .AddSwaggerDocument()
+                // NOTE: I'm not sure I need to use AddMvc here. It's a REST API service. AddControllers should be enough.
+                //services.AddControllers();
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -64,6 +66,13 @@ namespace WingsOn.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // As far as I understand the UseMvc configures the routing.
+            // I don't think I really need it. MapControllers is enough for RESP API service.
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
 
             app.UseMiddleware<ErrorHandlingMiddleware>()
                 .UseMvc()
